@@ -5,6 +5,8 @@ Still working out the Project Goals and Priorities...lets gather some ideas and 
 
 Will need to model the dimensions/coordinates of the areas of the board..here is an example that starts that and also includes GUI feedback
 https://www.101computing.net/darts-scoring-algorithm/
+I've taken the steps into getting the drawing demo running locally...and now I see that I want to take it to the next step and add the Tkinter layer following this example
+https://compucademy.net/python-turtle-graphics-and-tkinter-gui-programming/
 
 
 In The Beginning:
