@@ -5,6 +5,15 @@ import turtle
 import random
 import math
 import time
+from enum import Enum
+
+class Ring(Enum):
+    MISS = 0
+    SINGLE = 1
+    DOUBLE = 2
+    TRIPPLE = 3
+    SINGLE_BULL = 25 
+    DOUBLE_BULL = 50 
 
 
 def drawLayer(radius, color1, color2):
@@ -84,25 +93,95 @@ def writeScore(text):
 
 def dart(x,y):
     drawCross("#00FFFF", 10, x, y)
+    # print("HIT: "+ str(x) +" / "+ str(y))
+    calculateScore(x,y)
     myPen.penup()
     myPen.goto(-300, -300)
     myPen.getscreen().update()
+
+def getRing(x, y):
+    dist = math.sqrt(x*x + y*y)
+    # print(f"Distance: {dist}")
+    r = Ring.MISS
+    if(dist < 20):
+        r = Ring.DOUBLE_BULL
+    if(dist >= 20 and dist < 40):
+        r = Ring.SINGLE_BULL
+    if(dist >= 40 and dist < 148):
+        r = Ring.SINGLE
+    if(dist >= 148 and dist < 168):
+        r = Ring.TRIPPLE 
+    if(dist >= 168 and dist < 268):
+        r = Ring.SINGLE
+    if(dist >= 268 and dist < 288):
+        r = Ring.DOUBLE
+    # print(f"Ring: {r} -- {r.value}")
+    return(r)
+
+def getPts(ring, angle):
+    if(ring == Ring.DOUBLE_BULL or ring == Ring.SINGLE_BULL):
+        score = ring.value
+    else:
+        pts = 0
+        if(angle >=  351 or (angle >= 0 and angle < 9)):
+            pts = 6
+        if(angle >=  9 and angle < 27):
+            pts = 13
+        if(angle >=  27 and angle < 45):
+            pts = 4
+        if(angle >=  45 and angle < 63):
+            pts = 18
+        if(angle >=  63 and angle < 81):
+            pts = 1
+        if(angle >=  81 and angle < 99):
+            pts = 20
+        if(angle >=  99 and angle < 117):
+            pts = 5
+        if(angle >=  117 and angle < 135):
+            pts = 12
+        if(angle >=  135 and angle < 153):
+            pts = 9
+        if(angle >=  153 and angle < 171):
+            pts = 14
+        if(angle >=  171 and angle < 189):
+            pts = 11
+        if(angle >=  189 and angle < 207):
+            pts = 8
+        if(angle >=  207 and angle < 225):
+            pts = 16
+        if(angle >=  225 and angle < 243):
+            pts = 7
+        if(angle >=  243 and angle < 261):
+            pts = 19
+        if(angle >=  261 and angle < 279):
+            pts = 3
+        if(angle >=  279 and angle < 297):
+            pts = 17
+        if(angle >=  297 and angle < 315):
+            pts = 2
+        if(angle >=  315 and angle < 333):
+            pts = 15
+        if(angle >=  333 and angle < 351):
+            pts = 10
+        score = pts * ring.value
+
+    print(f"Score: {score}")
+    return(score)
+
+def getAngle(x, y):
+    angle = math.degrees(math.atan2(y, x))
+    if angle < 0:
+        angle += 360
+    # print(f"Angle: {angle}")
+    return(angle)
 
 
 def calculateScore(arrowx, arrowy):
     score = 0
     distance = 0
-    # Add code here using Pythagoras formula to calculate the distance to the centre.
-    # distance = ....
-
-    # Use SOCATOA to calculate the angle matching the arrow position
-    angle = math.degrees(math.atan2(arrowy, arrowx))
-    if angle < 0:
-        angle += 360
-    print(angle)
-
-    # Use a collection of IF statements to calculate the score of the arrow based on the distance and angle
-    # ...
+    ring = getRing(arrowx, arrowy)
+    angle= getAngle(arrowx, arrowy)
+    getPts(ring, angle)
 
     return score
 
