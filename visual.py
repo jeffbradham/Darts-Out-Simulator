@@ -4,7 +4,6 @@
 import turtle
 import random
 import math
-import time
 from enum import Enum
 
 class Ring(Enum):
@@ -166,6 +165,7 @@ def getPts(ring, angle):
         score = pts * ring.value
 
     print(f"Score: {score}")
+    writeScore("Your Score: + " + str(score))
     return(score)
 
 def getAngle(x, y):
@@ -196,13 +196,13 @@ myPen.color("#FF0000")
 
 myPen.shape('arrow')
 myPen.pensize(1)
-myPen.pencolor('black')
+myPen.pencolor('red')
 
 drawTarget()
 # Shooting the arrow
 arrowx = random.randint(-150, 150)
 arrowy = random.randint(-150, 150)
-drawCross("#00FFFF", 10, arrowx, arrowy)
+drawCross("#FFFFFF", 10, arrowx, arrowy)
 
 # Calculate and display score
 # score = calculateScore(arrowx, arrowy)
